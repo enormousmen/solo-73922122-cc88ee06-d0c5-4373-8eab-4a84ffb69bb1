@@ -8,7 +8,7 @@
 </head>
 <body>
 <h1>切片值班台</h1>
-<p class="sub">常规底图 / 应急航片 · 同一时刻仅一个渲染子进程 · 应急受理立即抢占常规</p>
+<p class="sub">常规底图两名额分层调度（在算+待出图合计≤2）· 下一级预渲染算完先持有、本层出齐才发布 · 应急单进程插队</p>
 <p id="global" class="global">当前渲染进程：-</p>
 
 <div class="panels">
@@ -16,10 +16,18 @@
     <h2>常规底图 <span class="badge"></span></h2>
     <div class="ops">
       <button data-act="start">启动切片</button>
+      <label class="chk">指定失败瓦片 <input type="text" id="fail-tile" placeholder="如 2/0/0" size="9"></label>
       <button data-act="reset" class="ghost">重置</button>
     </div>
     <div class="bar"><div class="fill"></div></div>
     <p class="info">-</p>
+    <div class="legend">
+      <span class="lg lg-empty">未派发</span>
+      <span class="lg lg-render">渲染中</span>
+      <span class="lg lg-held">已算完·待出图</span>
+      <span class="lg lg-pub">已发布</span>
+      <span class="lg lg-fail">本层失败</span>
+    </div>
     <div class="pyramid"></div>
   </section>
 
@@ -32,13 +40,23 @@
     </div>
     <div class="bar"><div class="fill"></div></div>
     <p class="info">-</p>
+    <div class="legend">
+      <span class="lg lg-empty">未派发</span>
+      <span class="lg lg-render">渲染中</span>
+      <span class="lg lg-pub">已发布</span>
+    </div>
     <div class="pyramid"></div>
   </section>
 </div>
 
 <p class="hint">
-演示：先点「启动切片」让常规底图渲染到一半，再点「启动应急切片（插队）」——常规立即中止，
-应急算完后常规自动续做，已发布瓦片不重算。点击任意瓦片可打开对应 PNG。
+  演示①（跨层出图）：点「启动切片」观察 z1 最后一张在算时，z2 的一张瓦片先进入「已算完·待出图」（黄色），
+  z1 出齐瞬间它才变绿发布，随后才进入 z2。<br>
+  演示②（分层失败重试）：在「指定失败瓦片」填 <code>2/0/0</code> 再启动，z2 失败后停派新瓦片、
+  在算的照常发布，任务判失败；清空输入再点启动即只补缺失瓦片。填 <code>3/0/0</code> 可演示
+  z3 预渲染先失败、z2 照常出齐后才报告错误。<br>
+  演示③（应急插队）：渲染中点「启动应急切片（插队）」，常规全部未发布瓦片被舍弃，
+  应急全程单进程；应急结束后常规自动续做、只算缺片。点击任意已发布瓦片可打开对应 PNG。
 </p>
 <script src="/app.js"></script>
 </body>
