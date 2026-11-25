@@ -1,0 +1,48 @@
+* { box-sizing: border-box; }
+body {
+  font-family: "PingFang SC", "Microsoft YaHei", system-ui, sans-serif;
+  margin: 0; padding: 24px; background: #f2f4f7; color: #222;
+}
+h1 { margin: 0 0 4px; font-size: 22px; }
+.sub { margin: 0 0 12px; color: #667; font-size: 13px; }
+.global {
+  display: inline-block; padding: 4px 12px; border-radius: 12px;
+  background: #1f3a5f; color: #fff; font-size: 13px;
+}
+.panels { display: flex; gap: 20px; flex-wrap: wrap; margin-top: 12px; }
+.panel {
+  background: #fff; border-radius: 10px; padding: 16px 18px;
+  box-shadow: 0 1px 4px rgba(0,0,0,.08); min-width: 560px; flex: 1;
+}
+.panel.emergency { border-top: 4px solid #c0392b; }
+.panel:not(.emergency) { border-top: 4px solid #2e6da4; }
+h2 { margin: 0 0 10px; font-size: 17px; display: flex; align-items: center; gap: 8px; }
+.badge {
+  font-size: 12px; font-weight: normal; padding: 2px 10px;
+  border-radius: 10px; background: #dde3ea; color: #345;
+}
+.panel[data-status="running"] .badge { background: #2e86de; color: #fff; }
+.panel[data-status="interrupted"] .badge { background: #e67e22; color: #fff; }
+.panel[data-status="done"] .badge { background: #27ae60; color: #fff; }
+.panel[data-status="failed"] .badge { background: #c0392b; color: #fff; }
+.ops { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+button {
+  border: 0; border-radius: 6px; padding: 7px 14px; cursor: pointer;
+  background: #2e6da4; color: #fff; font-size: 13px;
+}
+button:hover { filter: brightness(1.1); }
+button.danger { background: #c0392b; }
+button.ghost { background: #e4e8ee; color: #345; }
+.chk { font-size: 13px; color: #a33; }
+.bar { height: 10px; border-radius: 5px; background: #e4e8ee; overflow: hidden; }
+.fill { height: 100%; width: 0; background: linear-gradient(90deg, #2e86de, #27ae60); transition: width .3s; }
+.info { font-size: 12px; color: #556; min-height: 16px; margin: 8px 0 10px; }
+.pyramid { display: flex; flex-direction: column; gap: 6px; }
+.zrow { display: grid; gap: 2px; }
+.cell {
+  display: block; aspect-ratio: 1; background: #eef1f5;
+  border: 1px dashed #c8d0da; border-radius: 3px; overflow: hidden;
+}
+.cell:not(.empty) { border-style: solid; border-color: #7aa7d9; }
+.cell img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.hint { margin-top: 16px; font-size: 13px; color: #667; max-width: 900px; line-height: 1.7; }

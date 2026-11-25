@@ -1,0 +1,10 @@
+services:
+  tiler:
+    build: .
+    ports:
+      - "8000:8000"
+    environment:
+      TILE_DELAY: "0.15"   # 每张瓦片的模拟渲染耗时，调大可放慢演示节奏
+    volumes:
+      - ./data:/data       # 源图与已发布瓦片持久化
+    restart: unless-stopped

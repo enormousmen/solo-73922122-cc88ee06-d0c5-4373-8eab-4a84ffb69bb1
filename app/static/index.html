@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>切片值班台</title>
+<link rel="stylesheet" href="/style.css">
+</head>
+<body>
+<h1>切片值班台</h1>
+<p class="sub">常规底图 / 应急航片 · 同一时刻仅一个渲染子进程 · 应急受理立即抢占常规</p>
+<p id="global" class="global">当前渲染进程：-</p>
+
+<div class="panels">
+  <section id="panel-regular" class="panel">
+    <h2>常规底图 <span class="badge"></span></h2>
+    <div class="ops">
+      <button data-act="start">启动切片</button>
+      <button data-act="reset" class="ghost">重置</button>
+    </div>
+    <div class="bar"><div class="fill"></div></div>
+    <p class="info">-</p>
+    <div class="pyramid"></div>
+  </section>
+
+  <section id="panel-emergency" class="panel emergency">
+    <h2>应急航片 <span class="badge"></span></h2>
+    <div class="ops">
+      <button data-act="start" class="danger">启动应急切片（插队）</button>
+      <label class="chk"><input type="checkbox" id="simulate-fail"> 模拟渲染失败</label>
+      <button data-act="reset" class="ghost">重置</button>
+    </div>
+    <div class="bar"><div class="fill"></div></div>
+    <p class="info">-</p>
+    <div class="pyramid"></div>
+  </section>
+</div>
+
+<p class="hint">
+演示：先点「启动切片」让常规底图渲染到一半，再点「启动应急切片（插队）」——常规立即中止，
+应急算完后常规自动续做，已发布瓦片不重算。点击任意瓦片可打开对应 PNG。
+</p>
+<script src="/app.js"></script>
+</body>
+</html>
